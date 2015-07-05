@@ -76,11 +76,16 @@ angular.module('todo', ['ionic'])
 
         // Create the new project
         $scope.createProject = function(project) {
+            /*
             $scope.projects.push({
                 title: project.title
             });
-            $scope.projectModal.hide();
+            */
+            var newProject = Projects.newProject(project.title);
+            $scope.projects.push(newProject);
             Projects.save($scope.projects);
+            $scope.selectProject(newProject, $scope.projects.length-1);
+            $scope.projectModal.hide();
             project.title = "";
         }
 
