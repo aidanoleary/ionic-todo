@@ -57,13 +57,42 @@ angular.module('todo', ['ionic'])
         // Projects
         // ===========
 
+        // Create our projects modal
+        $ionicModal.fromTemplateUrl('new-project.html', function(modal) {
+            $scope.projectModal = modal;
+        }, {
+            scope: $scope
+        });
+
+        //Show the new project modal
+        $scope.newProject = function() {
+            $scope.projectModal.show();
+        }
+
+        //Hide the new project modal
+        $scope.closeNewProject = function() {
+            $scope.projectModal.hide();
+        }
+
+        // Create the new project
+        $scope.createProject = function(project) {
+            $scope.projects.push({
+                title: project.title
+            });
+            $scope.projectModal.hide();
+            Projects.save($scope.projects);
+            project.title = "";
+        }
+
         //A utility function for creating a new project
+        /*
         var createProject = function(projectTitle) {
             var newProject = Projects.newProject(projectTitle);
             $scope.projects.push(newProject);
             Projects.save($scope.projects);
             $scope.selectProject(newProject, $scope.projects.length-1);
         }
+        */
 
         // Load or initialise projects
         $scope.projects = Projects.all();
@@ -72,12 +101,14 @@ angular.module('todo', ['ionic'])
         $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
 
         // Called to create a new project
+        /*
         $scope.newProject = function() {
             var projectTitle = prompt('project name');
             if(projectTitle) {
                 createProject(projectTitle);
             }
         };
+        */
 
         // Delete a project
         $scope.deleteProject = function(project) {
@@ -137,13 +168,20 @@ angular.module('todo', ['ionic'])
 
         $timeout(function() {
             if($scope.projects.length == 0) {
+                $scope.newProject();
+                /*
                 while(true) {
+
                     var projectTitle = prompt('Your first project title:');
+
                     if(projectTitle) {
-                        createProject(projectTitle);
+                        $scope.createProject({
+                            title: projectTitle
+                        });
                         break;
                     }
                 }
+                */
             }
         })
 

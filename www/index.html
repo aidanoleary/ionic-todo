@@ -26,7 +26,7 @@
 
       <!-- Center content -->
       <ion-side-menu-content>
-        <ion-header-bar class="bar-dark">
+        <ion-header-bar class="bar-positive">
             <button class="button button-icon" ng-click="toggleProjects()">
                 <i class="icon icon-navigation"></i>
             </button>
@@ -38,13 +38,9 @@
         </ion-header-bar>
         <ion-content>
           <ion-list>
-              <ion-item ng-repeat="task in activeProject.tasks">
-                  <div class="item item-button-right">
-                      <p>{{task.title}}</p>
-                      <button class="button button-icon ion-close-circled" ng-click="deleteTask(task)">
-                      <!-- <i class="icon icon-right ion-close-circled"></i> -->
-                      </button>
-                  </div>
+              <ion-item class="item item-button-right" ng-repeat="task in activeProject.tasks">
+                  <p>{{task.title}}</p>
+                  <button class="button button-icon ion-close-circled" ng-click="deleteTask(task)"></button>
               </ion-item>
           </ion-list>
         </ion-content>
@@ -52,19 +48,16 @@
 
       <!-- Left menu -->
       <ion-side-menu side="left">
-        <ion-header-bar class="bar-dark">
+        <ion-header-bar class="bar-positive">
           <h1 class="title">Projects</h1>
             <button class="button button-icon ion-plus" ng-click="newProject()">
             </button>
         </ion-header-bar>
           <ion-content scroll="false">
               <ion-list>
-                  <ion-item ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
-                      <div class="item item-button-right">
-                          {{project.title}}
-                          <button class="button button-icon ion-close-circled" ng-click="deleteProject(project)">
-                          </button>
-                      </div>
+                  <ion-item class="item item-button-right" ng-repeat="project in projects" ng-click="selectProject(project, $index)" ng-class="{active: activeProject == project}">
+                      {{project.title}}
+                      <button class="button button-icon ion-close-circled" ng-click="deleteProject(project)"></button>
                   </ion-item>
               </ion-list>
           </ion-content>
@@ -99,6 +92,37 @@
             </div>
 
         </script>
+
+        <script id="new-project.html" type="text/ng-template">
+
+            <div class="modal">
+
+                <!-- Modal header bar -->
+                <ion-header-bar class="bar-secondary">
+                    <h1 class="title">New Project</h1>
+                    <button class="button button-clear button-positive" ng-click="closeNewProject()">Cancel</button>
+                </ion-header-bar>
+
+                <!-- Modal content area -->
+                <ion-content>
+
+                    <form ng-submit="createProject(project)">
+                        <div class="list">
+                            <label class="item item-input">
+                                <input type="text" placeholder="What is the name of the project?" ng-model="project.title">
+                            </label>
+                        </div>
+                        <div class="padding">
+                            <button type="submit" class="button button-block button-positive">Create Project</button>
+                        </div>
+                    </form>
+
+                </ion-content>
+
+            </div>
+
+        </script>
+
 
 
     </ion-side-menus>
