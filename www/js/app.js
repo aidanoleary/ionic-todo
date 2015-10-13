@@ -117,9 +117,21 @@ angular.module('todo', ['ionic'])
 
         // Delete a project
         $scope.deleteProject = function(project) {
+            var projectIndex = $scope.projects.indexOf(project);
+
             $scope.projects.splice($scope.projects.indexOf(project), 1);
+            //$scope.activeProject = $scope.projects[projectIndex];
             Projects.save($scope.projects);
-        }
+
+            // Make the current project switch to the previous project,
+            // If it's the first project switch to new first project.
+            if(projectIndex !== 0) {
+                $scope.activeProject = $scope.projects[projectIndex - 1];
+            }
+            else {
+                $scope.activeProject = $scope.projects[0];
+            }
+        };
 
         // Called to select the given project
         $scope.selectProject = function(project, index) {
